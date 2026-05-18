@@ -3,7 +3,7 @@
 # 메인 쿼리 WHERE 절에서 필터링 된 상태라 SELECT 절에서 COUNT(*)를 해도 전체행이 아닌 필터링된 행의 개수를 카운팅함
 SELECT ROUND(COUNT(event_date)/(SELECT COUNT(DISTINCT player_id) FROM Activity),2) as fraction
 FROM  (SELECT player_id, event_date, LEAD(event_date,1)OVER(PARTITION BY player_id ORDER BY event_date) as next_date
-                FROM Activity) as na # date 기준 현재 행과 다음 행을 출력하는 뷰 테이블
+       FROM Activity) as na # date 기준 현재 행과 다음 행을 출력하는 뷰 테이블
 
 # 최초 로그인 조건 + 첫날과 그 다음날에 접속한 플레이어를 찾는 조건
 WHERE event_date = (SELECT MIN(event_date)
